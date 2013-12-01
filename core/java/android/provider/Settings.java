@@ -4950,7 +4950,11 @@ public final class Settings {
          */
         public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
 
-        /** End of ABC system settings**/
+        /**
+         * Whether to mute annoying notifications
+         * @hide
+         */
+        public static final String MUTE_ANNOYING_NOTIFICATIONS_THRESHOLD = "mute_annoying_notifications_threshold";
 
        /**
        * Settings to backup. This is here so that it's in the same place as the settings
