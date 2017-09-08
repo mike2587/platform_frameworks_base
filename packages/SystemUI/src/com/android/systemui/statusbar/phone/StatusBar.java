@@ -524,6 +524,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     int mMaxAllowedKeyguardNotifications;
 
     boolean mExpandedVisible;
+    
+    boolean mLessBoringHeadsUp;
 
     private int mStatusBarHeaderHeight;
 
@@ -6694,6 +6696,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ANIM_TILE_INTERPOLATOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LESS_BORING_HEADS_UP),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -6769,6 +6774,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.ANIM_TILE_DURATION)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.ANIM_TILE_INTERPOLATOR))) {
                 setQsPanelOptions();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.LESS_BORING_HEADS_UP))) {
+                setUseLessBoringHeadsUp();
             }
         }
 
@@ -6784,6 +6792,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setForceAmbient();
             updateTickerAnimation();
             setQsPanelOptions();
+            setUseLessBoringHeadsUp();
         }
     }
 
@@ -6928,6 +6937,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
         }
     };
+
+    private void setUseLessBoringHeadsUp() {
+        mLessBoringHeadsUp = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LESS_BORING_HEADS_UP, 1,
+                UserHandle.USER_CURRENT) == 1;
+    }
 
     private RemoteViews.OnClickHandler mOnClickHandler = new RemoteViews.OnClickHandler() {
 
@@ -8567,8 +8582,14 @@ public class StatusBar extends SystemUI implements DemoMode,
             return false;
         }
 
-        if ((!isDozing() && !mUseHeadsUp) || isDeviceInVrMode()) {
-            if (DEBUG) Log.d(TAG, "No peeking: no huns or vr mode");
+        boolean isImportantHeadsUp = false;
+        String notificationPackageName = sbn.getPackageName().toLowerCase();
+        isImportantHeadsUp = notificationPackageName.contains("dialer") ||
+                notificationPackageName.contains("messaging");
+
+        if (!mUseHeadsUp || isDeviceInVrMode() || (!isDozing() && mLessBoringHeadsUp &&
+                !isImportantHeadsUp)) {
+            if (DEBUG) Log.d(TAG, "No peeking: no huns or vr mode or less boring headsup enabled");
             return false;
         }
 
