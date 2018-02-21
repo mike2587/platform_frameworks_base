@@ -178,6 +178,9 @@ public final class ViewRootImpl implements ViewParent,
     public static final String PROPERTY_EMULATOR_WIN_OUTSET_BOTTOM_PX =
             "ro.emu.win_outset_bottom_px";
 
+    private static final boolean SCROLL_BOOST_SS_ENABLE =
+                    SystemProperties.getBoolean("vendor.perf.gestureflingboost.enable", false);
+
     /**
      * Maximum time we allow the user to roll the trackball enough to generate
      * a key event, before resetting the counters.
@@ -3213,7 +3216,7 @@ public final class ViewRootImpl implements ViewParent,
         scrollToRectOrFocus(null, false);
 
         if (mAttachInfo.mViewScrollChanged) {
-            if (mHaveMoveEvent && !mIsPerfLockAcquired) {
+            if (!SCROLL_BOOST_SS_ENABLE && mHaveMoveEvent && !mIsPerfLockAcquired) {
                 mIsPerfLockAcquired = true;
                 if (mPerf != null) {
                     String currentPackage = mContext.getPackageName();
