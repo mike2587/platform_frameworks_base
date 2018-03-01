@@ -561,6 +561,7 @@ public final class ViewRootImpl implements ViewParent,
         }
 
         loadSystemProperties();
+        mPerf = new BoostFramework(context);
 
         DisplayMetrics dm = new DisplayMetrics();
         mAttachInfo.mDisplay.getRealMetrics(dm);
@@ -3214,9 +3215,6 @@ public final class ViewRootImpl implements ViewParent,
         if (mAttachInfo.mViewScrollChanged) {
             if (mHaveMoveEvent && !mIsPerfLockAcquired) {
                 mIsPerfLockAcquired = true;
-                if (mPerf == null) {
-                    mPerf = new BoostFramework();
-                }
                 if (mPerf != null) {
                     String currentPackage = mContext.getPackageName();
                     mPerf.perfHint(BoostFramework.VENDOR_HINT_SCROLL_BOOST, currentPackage, -1, BoostFramework.Scroll.PREFILING);
