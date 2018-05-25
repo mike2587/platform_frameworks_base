@@ -1190,7 +1190,7 @@ public class UsbDeviceManager {
                     Notification.Builder builder = new Notification.Builder(mContext, channel)
                                     .setSmallIcon(com.android.internal.R.drawable.stat_sys_adb)
                                     .setWhen(0)
-                                    .setOngoing(true)
+                                    .setOngoing(false)
                                     .setTicker(title)
                                     .setDefaults(0)  // please be quiet
                                     .setColor(mContext.getColor(
