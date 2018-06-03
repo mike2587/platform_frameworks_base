@@ -8749,7 +8749,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             return false;
         }
 
-        if (isDozing() && mNotificationData.shouldSuppressScreenOff(sbn.getKey())) {
+        if (isDozing() && (mNotificationData.shouldSuppressScreenOff(sbn.getKey()) || mZenMode != 0)) {
             if (DEBUG) Log.d(TAG, "No peeking: suppressed by DND: " + sbn.getKey());
             return false;
         }
