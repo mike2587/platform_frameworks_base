@@ -40,6 +40,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.util.Log;
 import android.util.Slog;
 import android.util.TypedValue;
@@ -528,6 +529,7 @@ public class KeyguardStatusView extends GridLayout implements
             default:
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 mClockView.setSingleLine(true);
+                mClockView.setGravity(Gravity.CENTER);
                 mAnalogClockView.unregisterReceiver();
                 mDeadPoolClockView.unregisterReceiver();
                 break;
@@ -536,6 +538,7 @@ public class KeyguardStatusView extends GridLayout implements
                 mClockView.setSingleLine(true);
                 mAnalogClockView.unregisterReceiver();
                 mDeadPoolClockView.unregisterReceiver();
+                mClockView.setGravity(Gravity.CENTER);
                 break;
             case 2: // analog
                 params.addRule(RelativeLayout.BELOW, R.id.analog_clock_view);
@@ -550,12 +553,14 @@ public class KeyguardStatusView extends GridLayout implements
             case 4: // sammy
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 mClockView.setSingleLine(false);
+                mClockView.setGravity(Gravity.CENTER);
                 mAnalogClockView.unregisterReceiver();
                 mDeadPoolClockView.unregisterReceiver();
                 break;
             case 5: // sammy (bold)
                 params.addRule(RelativeLayout.BELOW, R.id.clock_view);
                 mClockView.setSingleLine(false);
+                mClockView.setGravity(Gravity.CENTER);
                 mAnalogClockView.unregisterReceiver();
                 mDeadPoolClockView.unregisterReceiver();
                 break;
