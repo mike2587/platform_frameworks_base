@@ -271,6 +271,11 @@ public class AEXUtils {
         }, 20);
     }
 
+    public static void sendKeycode(int keycode) {
+        final Handler handler = new Handler(Looper.getMainLooper());
+        sendKeycode(keycode, handler);
+    }
+
     public static void takeScreenshot(boolean full) {
         try {
             Thread.sleep(1000);
