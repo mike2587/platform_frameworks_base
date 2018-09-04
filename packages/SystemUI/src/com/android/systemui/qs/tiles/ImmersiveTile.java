@@ -35,8 +35,10 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
         super(host);
         mMode = Settings.Global.getStringForUser(mContext.getContentResolver(),
                 Settings.Global.POLICY_CONTROL, UserHandle.USER_CURRENT);
-        if (mMode == null) {
-            mMode = IMMERSIVE_OFF;
+        // if policy control is not set yet or the user did set it with adb on a different state, set full immersive as default unactive state
+        if (mMode == null ||
+                (!mMode.equals(IMMERSIVE_FULL) && !mMode.equals(IMMERSIVE_STATUSBAR) && !mMode.equals(IMMERSIVE_NAVBAR))) {
+            mMode = IMMERSIVE_FULL;
         }
     }
      @Override
@@ -52,8 +54,7 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
     }
      @Override
     public void handleLongClick() {
-        if (mMode.equals(IMMERSIVE_OFF)) return;
-         mHost.collapsePanels();
+        mHost.collapsePanels();
         setImmersiveMode(mMode);
         refreshState();
     }
@@ -67,8 +68,6 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
         } else if (mMode.equals(IMMERSIVE_NAVBAR)) {
             mMode = IMMERSIVE_STATUSBAR;
         } else if (mMode.equals(IMMERSIVE_STATUSBAR)) {
-            mMode = IMMERSIVE_OFF;
-        } else {
             mMode = IMMERSIVE_FULL;
         }
         refreshState();
@@ -98,11 +97,8 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
             state.contentDescription = mContext.getString(R.string.quick_settings_immersive_tile_navbar);
             state.label = mContext.getString(R.string.quick_settings_immersive_tile_navbar);
             state.icon = ResourceIcon.get(R.drawable.ic_qs_immersive_navbar);
-        } else {
-            state.contentDescription = mContext.getString(R.string.quick_settings_immersive_tile_off);
-            state.label = mContext.getString(R.string.quick_settings_immersive_tile_off);
-            state.icon = ResourceIcon.get(R.drawable.ic_qs_immersive_off);
         }
+         // the icon will be greyed out if the actual selected mode is not active
          state.value = mMode.equals(Settings.Global.getStringForUser(mContext.getContentResolver(),
                 Settings.Global.POLICY_CONTROL, UserHandle.USER_CURRENT));
         state.state = state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
