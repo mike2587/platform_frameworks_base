@@ -24,6 +24,7 @@ import android.util.Log;
 public class ThemeAccentUtils {
     public static final String TAG = "ThemeAccentUtils";
 
+
     private static final String[] ACCENTS = {
         "default_accent", // 0
         "com.accents.red", // 1
@@ -61,6 +62,7 @@ public class ThemeAccentUtils {
         "com.android.dialer.theme.dark", //3
         "com.android.contacts.theme.dark", //4
         "com.android.documentsui.theme.dark", //5
+        "com.android.gboard.theme.dark", // 6
     };
 
     private static final String[] BLACK_THEMES = {
