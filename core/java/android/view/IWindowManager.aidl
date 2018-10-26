@@ -451,4 +451,5 @@ interface IWindowManager
 
     boolean isGestureButtonRegion(int i, int i2);
 
+    boolean isKeyguardShowingAndNotOccluded();
 }
