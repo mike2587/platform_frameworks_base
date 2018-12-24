@@ -60,9 +60,9 @@ public class WeatherClient {
             COLUMN_TEMPERATURE_IMPERIAL
     };
 
-    private static final int WEATHER_UPDATE_INTERVAL = 60 * 10 * 1000; // 10 minutes
-    private boolean mBootAndUnlockDone;
+    private static final int WEATHER_UPDATE_INTERVAL = 60 * 20 * 1000; // 10 minutes
     private String updateIntentAction;
+    private boolean mBootAndUnlockDone;
     private PendingIntent pendingWeatherUpdate;
     private WeatherInfo mWeatherInfo = new WeatherInfo();
     private Context mContext;
