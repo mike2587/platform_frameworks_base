@@ -4789,9 +4789,15 @@ public final class Settings {
 
         /**
          * Whether to allow one finger quick settings expansion on the right side of the statusbar.
+           *@hide
+           */
+        public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
+
+        /**
+         * Select which lockscreen clock style to display
          * @hide
          */
-        public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
+        public static final String LOCKSCREEN_CLOCK_SELECTION = "lockscreen_clock_selection";        
 
         /**
          * Quick Settings Smart Pulldown
